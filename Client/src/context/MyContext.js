@@ -7,7 +7,6 @@ const MyProvider = ({ children }) => {
   const [selectedContact, setSelectedContact] = useState("");
   const [userImage, setUserImage] = useState(""); // Add userImage state
   const [isAddUser, setIsAddUser] = useState(true); // Add userImage state
-  const [lastMessage, setLastMessage] = useState(null); // Add lastMessage state
 
 
   return (
@@ -19,8 +18,7 @@ const MyProvider = ({ children }) => {
         setUserImage,
         isAddUser,
         setIsAddUser,
-        lastMessage, 
-        setLastMessage
+        
       }}
     >
       {children}

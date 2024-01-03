@@ -36,7 +36,7 @@ const calculateTimeDifference = (createdAt) => {
 };
 
 const Message = () => {
-  const { selectedContact, setLastMessage } = useMyContext();
+  const { selectedContact } = useMyContext();
   const userId = localStorage.getItem("userId");
 
   const navigate = useNavigate();
@@ -56,14 +56,11 @@ const Message = () => {
       },
     });
     if (response.status === 200) {
-      console.log(
-        "🚀 ~ file: Message.js:36 ~ getMeassages ~ response:",
-        response
-      );
+     
       setMeassagecontent(response.data.data.data);
 
-      const lastMessage = response.data.data.data[0];
-      setLastMessage(lastMessage)
+      // const lastMessage = response.data.data.data[0];
+      // setLastMessage(lastMessage)
 
     }
   };
