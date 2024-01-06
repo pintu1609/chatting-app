@@ -39,6 +39,7 @@ const Message = () => {
   const { selectedContact } = useMyContext();
   const userId = localStorage.getItem("userId");
 
+
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
@@ -56,11 +57,11 @@ const Message = () => {
       },
     });
     if (response.status === 200) {
-     
-      setMeassagecontent(response.data.data.data);
 
-      // const lastMessage = response.data.data.data[0];
-      // setLastMessage(lastMessage)
+      setMeassagecontent(response.data.data.data);
+      
+
+      
 
     }
   };
@@ -69,7 +70,7 @@ const Message = () => {
     if (token) {
       getMeassages(); 
       const intervalId = setInterval(() => {
-        getMeassages(); // Fetch messages every 1s
+        getMeassages(); // Fetch messages every 1ss
       }, 1000); // 1 second
 
       return () => {

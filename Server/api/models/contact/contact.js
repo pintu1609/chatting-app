@@ -14,6 +14,9 @@ const contactSchema = Schema(
     ids: {
       type: [{ type: Schema.ObjectId }],
     },
+    lastmessage: {
+      type: String,
+    },
   },
   {
     timestamps: true,

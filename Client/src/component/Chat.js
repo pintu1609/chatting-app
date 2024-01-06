@@ -10,10 +10,12 @@ import { useMyContext } from '../context/MyContext'
 
 const Chat = () => {
   const { selectedContact } = useMyContext();
+  console.log("🚀 ~ file: Chat.js:13 ~ Chat ~ selectedContact:", selectedContact.message)
   const contactName = selectedContact && selectedContact.name;
   const userid = selectedContact && selectedContact._id;
 
   
+
   
 
   const [showAddFriendModal, setShowAddFriendModal] = useState(false);
@@ -28,6 +30,8 @@ const Chat = () => {
         <div className='chatinfo'>
       <div className='chattitle'>
         <span> {contactName}</span>
+        {/* <p style={{ color: "white" }}>{isTyping ? "typing..." : "status"}</p> */}
+        
       </div>
       <div className='chatIcons'>
       {selectedContact &&<img src={cam} alt='' />}

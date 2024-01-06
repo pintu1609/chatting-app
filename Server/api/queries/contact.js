@@ -16,34 +16,11 @@ exports.search = (filter, pagination) => {
         foreignField: "_id", // The field from the target collection
         pipeline: [
           {
-            $lookup: {
-              from: "mainmessages", // The target collection
-              localField: "_id", // The field from the current collection
-              foreignField: "from",
-              pipeline: [
-                {
-                  $sort: {
-                    createdAt: -1,
-                  },
-                },
-                { $limit: 1 },
-              ],
-              as: "message", // The alias for the result
-            },
-          },
-          {
-            $unwind: {
-              path: "$message",
-              preserveNullAndEmptyArrays: true,
-            },
-          },
-          {
             $project: {
               name: 1,
               userName: 1,
               email: 1,
               image: 1,
-              message: 1,
             },
           },
         ],

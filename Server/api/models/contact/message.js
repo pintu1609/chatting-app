@@ -30,8 +30,8 @@ const mainMessageSchema = Schema(
       index: true,
     },
     message: {
-        type: String,
-      },
+      type: String,
+    },
   },
   {
     timestamps: true,

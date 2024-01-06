@@ -8,6 +8,7 @@ const MyProvider = ({ children }) => {
   const [userImage, setUserImage] = useState(""); // Add userImage state
   const [isAddUser, setIsAddUser] = useState(true); // Add userImage state
 
+  
 
   return (
     <MyContext.Provider
@@ -18,6 +19,7 @@ const MyProvider = ({ children }) => {
         setUserImage,
         isAddUser,
         setIsAddUser,
+      
         
       }}
     >

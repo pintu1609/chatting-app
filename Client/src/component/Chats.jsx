@@ -20,26 +20,7 @@ const Chats = () => {
 
 
 
-  const getLastMessage = (messageRec, messageSen) => {
-    if (!messageRec && !messageSen) {
-      return null;
-    }
-
-    if (!messageRec) {
-      return messageSen;
-    }
-
-    if (!messageSen) {
-      return messageRec;
-    }
-
-    // Compare timestamps or any other criteria that define the order
-    const timestampRec = new Date(messageRec.createdAt).getTime();
-    const timestampSen = new Date(messageSen.createdAt).getTime();
-
-    return timestampRec > timestampSen ? messageRec : messageSen;
-  };
-
+ 
 
 
 
@@ -53,7 +34,6 @@ const Chats = () => {
     });
 
     if (response.status === 200) {
-      console.log("🚀 ~ file: Chats.jsx:31 ~ getContact ~ response:", response.data.data)
       setContact(response.data.data.data);
     }
   };
@@ -80,23 +60,14 @@ const Chats = () => {
     <div className="chats">
       <div className="userchat">
         
+        
         {contact.map((item) => {
-
-
-          const lastMessageRec = item.users[1].message;
-
-        const lastMessageSen = item.users[0].message;
-
-        const latestMessage = getLastMessage(lastMessageRec, lastMessageSen);
-
-
+            const lastmessage= item.lastmessage; 
           const user = item.users.filter((user) => {
             return user._id !== userId;
           });
-          console.log("🚀 ~ file: Chats.jsx:63 ~ {contact.map ~ lastMessageText:", user)
-          
-
-          
+         
+         
 
           return (
             
@@ -105,11 +76,11 @@ const Chats = () => {
               names={user[0].name}
               images={user[0].image}
               onClick={() => setSelectedContact(user[0])}
-              // lastMessage={lastMessageText}
-              lastMessage={latestMessage ? latestMessage.message : null}
-
+              lastMessage={lastmessage}
+              
               />
               );
+              
         })}
       </div>
     </div>

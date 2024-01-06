@@ -4,14 +4,14 @@ import img from '../img/img.png'
 import { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import { useMyContext } from '../context/MyContext';
 const BASE_URL = process.env.BASE_URL || "http://localhost:5000/api/v1";
 
 
 const Input = (props) => {
   console.log('userid Path:', props.user);
   const navigate=useNavigate();
-  
+
 
   
 
@@ -30,15 +30,16 @@ const Input = (props) => {
       }
       
       const response = await axios.post(`${BASE_URL}/messages`, meassageSend ,{
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json", 
-        },
+      headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json", 
+          },
+          
+        });
         
-      });
-      
-      if (response.status === 200) {
-        
+        if (response.status === 200) {
+          console.log("🚀 ~ file: Input.js:34 ~ handleSend ~ response:", response)
+          
         setMeassageSend({ to: props.user, message: "" });
 
       }
@@ -78,9 +79,10 @@ const Input = (props) => {
       ...prevmeassageSend,
       [name]: value,
     }));
+    
   };
 
-
+  
 
 
   return (
@@ -88,7 +90,8 @@ const Input = (props) => {
       <div className='inputInfo'>
 
       <input type='text' placeholder='Type something...' name="message" value={meassageSend.message} onChange={handleChange} 
-      onKeyDown={handleKeyDown}/>
+      onKeyDown={handleKeyDown}           
+/>
       </div>
       <div className='send'>
         <img src={attached} alt=''/>

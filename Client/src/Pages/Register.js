@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import Add from "../img/download.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import AOS from "aos"; // Import AOS library
+import "aos/dist/aos.css"; // Import AOS styles
 
 const BASE_URL = process.env.BASE_URL || "http://localhost:5000/api/v1";
 
@@ -96,9 +98,14 @@ const Register = () => {
     }
   }, [file]);
 
+  useEffect(() => {
+    AOS.init();
+  }, []);
+
+
   return (
-    <div className="formcontainer">
-      <div className="formwrapper">
+    <div className="formcontainer" >
+      <div className="formwrapper" data-aos="fade-up"data-aos-duration="1500">
         <span className="logo">Chating app</span>
         <span className="title">Register</span>
         <form onSubmit={handleSubmit}>

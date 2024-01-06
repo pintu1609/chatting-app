@@ -3,7 +3,7 @@ const {
   clientHandler,
 } = require("../../middlewares/response-handler");
 const service = require("../../service/contact/message");
-// const spaceUserService = require('../../service/space/spaceUsers');
+const constactService = require("../../service/contact/contact");
 const { default: mongoose } = require("mongoose");
 const { search } = require("../../queries/message");
 
@@ -11,11 +11,23 @@ exports.create = async (req, res, next) => {
   try {
     const value = req.value;
     value.from = req.user.id;
+    
     let response;
+    
     response = await service.create(value);
 
     if (!response) return clientHandler("message isn't sent yet !!", res);
 
+    await constactService.update(
+      {
+        $or: [
+          { userId: new mongoose.Types.ObjectId(value.from), addedTo: new mongoose.Types.ObjectId(value.to) },
+          { userId: new mongoose.Types.ObjectId(value.to), addedTo: new mongoose.Types.ObjectId(value.from) },
+        ],
+      },
+      { lastmessage: value.message }
+    );
+    
     responseHandler(response, res);
   } catch (error) {
     console.error(error);
