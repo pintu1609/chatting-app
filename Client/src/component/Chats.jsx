@@ -42,12 +42,12 @@ const Chats = () => {
   useEffect(() => {
     if (token) {
       getContact();
-      // const intervalId = setInterval(() => {
-      //   getContact();
-      // }, 1000);
-      // return ()=>{
-      //   clearInterval(intervalId)
-      // }
+      const intervalId = setInterval(() => {
+        getContact();
+      }, 1000);
+      return ()=>{
+        clearInterval(intervalId)
+      }
     } else {
       navigate("/");
     }

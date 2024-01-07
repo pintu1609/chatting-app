@@ -2,6 +2,7 @@ import React from 'react'
 import cam from '../img/cam.png'
 import add from '../img/add.png'
 import more from '../img/more.png'
+import avtar from '../img/download.png'
 import Message from './Message'
 import Input from './Input'
 import {  useState, useEffect } from 'react'
@@ -16,15 +17,18 @@ const socket = io('http://localhost:5000/');
 
 const Chat = () => {
   const { selectedContact } = useMyContext();
-  // console.log("🚀 ~ file: Chat.js:13 ~ Chat ~ selectedContact:", selectedContact.message)
   const contactName = selectedContact && selectedContact.name;
+  const contactImage = selectedContact && selectedContact.image;
+
   const userid = selectedContact && selectedContact._id;
 
 
   const [isUserOnline, setIsUserOnline] = useState(false);
   const [isConnected, setIsConnected] = useState(false)
   const [currentMessage, setCurrentMessage] = useState("")  
+  console.log("🚀 ~ file: Chat.js:29 ~ Chat ~ currentMessage:", currentMessage)
   const [preMessage, setPreMessage] = useState("")
+  console.log("🚀 ~ file: Chat.js:31 ~ Chat ~ preMessage:", preMessage)
   const [istyping, setisTyping] = useState(false)
   socket.on('connect',()=>{
     setIsConnected(true);
@@ -48,7 +52,6 @@ const Chat = () => {
     
     // Listen for 'online' event from the server
     socket.on('online', (userId) => {
-      console.log("🚀 ~ file: Chat.js:24 ~ Chat ~ isUserOnline:", localStorage.getItem("userId"))
       if (userId === selectedContact._id) {
         setIsUserOnline(true);
       }
@@ -66,7 +69,7 @@ const Chat = () => {
       console.log({istyping})
     })
     const intervalId = setInterval(() => {
-      let istyping = currentMessage != preMessage
+      let istyping = currentMessage !== preMessage
       setPreMessage(currentMessage)
       socket.emit('ping', istyping)
       if(selectedContact){
@@ -95,11 +98,17 @@ const Chat = () => {
   return (
     <div className='chat'>
         <div className='chatinfo'>
+          <div className='userdetails'>
+            <div className='chatImage'>
+            {selectedContact && <img src= {contactImage} alt={avtar}/>}
+            </div>
       <div className='chattitle'>
         <span> {contactName}</span>
-        <p style={{ color: 'white' }}>{isUserOnline ? 'Online' : 'Offline'}</p>
-        
-      </div>
+        {selectedContact && <p style={{ color: 'white' }}>{isUserOnline ? 'Online' : 'Offline'}</p>}
+        {selectedContact && <p style={{ color: 'white' }}>{istyping ? 'istyping' : ''}</p>}
+
+        </div>
+     </div>
       <div className='chatIcons'>
       {selectedContact &&<img src={cam} alt='' />}
       <img src={add}  alt=''  onClick={handleAddFriend}/>

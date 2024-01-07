@@ -75,6 +75,7 @@ const Input = (props) => {
   console.log("🚀 ~ file: Input.js:17 ~ Input ~ meassageSend:", meassageSend)
   const handleChange = (e) => {
     const { name, value } = e.target;
+    props.mess(value)
     setMeassageSend((prevmeassageSend) => ({
       ...prevmeassageSend,
       [name]: value,

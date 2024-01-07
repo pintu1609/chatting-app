@@ -179,12 +179,31 @@ img{
     justify-content: space-between;
     padding: 10px;
 
-    .chattitle{
-        span{
-            font-weight: bold;
-            color:white;
-            font-size: 20px ;
+    .userdetails{
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+
+        .chatImage{
+            display: flex;
+            align-items: center;
+           img{
+                height: 40px;
+                width: 40px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
         }
+
+        .chattitle{
+            height: 50px;
+            span{
+                font-weight: bold;
+                color:white;
+                font-size: 20px ;
+            }
+    }
+
     }
 }
 .chat .chatinfo .chatIcons{
