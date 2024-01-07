@@ -2,7 +2,7 @@ import React from 'react'
 
 const ChatsItem = (props) => {
   const { images, names, onClick, lastMessage } = props;
-  console.log("🚀 ~ file: ChatsItem.jsx:5 ~ ChatsItem ~ lastMessage:", lastMessage)
+  // console.log("🚀 ~ file: ChatsItem.jsx:5 ~ ChatsItem ~ lastMessage:", lastMessage)
   const slicedLastMessage = lastMessage ? lastMessage.slice(0, 30) : '';
 
   

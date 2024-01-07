@@ -4,8 +4,11 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMyContext } from "../context/MyContext";
+// import socketIOClient from 'socket.io-client';
+
 
 const BASE_URL = process.env.BASE_URL || "http://localhost:5000/api/v1";
+
 
 const Chats = () => {
   const navigate = useNavigate();
