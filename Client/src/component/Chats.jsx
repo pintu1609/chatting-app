@@ -4,11 +4,8 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMyContext } from "../context/MyContext";
-// import socketIOClient from 'socket.io-client';
-
 
 const BASE_URL = process.env.BASE_URL || "http://localhost:5000/api/v1";
-
 
 const Chats = () => {
   const navigate = useNavigate();
@@ -29,7 +26,7 @@ const Chats = () => {
 
 
   const getContact = async () => {
-    const response = await axios.get(`${BASE_URL}/contact`, {
+    const response = await axios.get(`http://localhost:5000/api/v1/contact`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -38,18 +35,19 @@ const Chats = () => {
 
     if (response.status === 200) {
       setContact(response.data.data.data);
+      // console.log("🚀 ~ file: Chats.jsx:39 ~ getContact ~ response.data.data.data:", response.data.data.data)
     }
   };
 
   useEffect(() => {
     if (token) {
       getContact();
-      const intervalId = setInterval(() => {
-        getContact();
-      }, 1000);
-      return ()=>{
-        clearInterval(intervalId)
-      }
+      // const intervalId = setInterval(() => {
+      //   getContact();
+      // }, 1000);
+      // return ()=>{
+      //   clearInterval(intervalId)
+      // }
     } else {
       navigate("/");
     }

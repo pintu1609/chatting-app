@@ -9,25 +9,46 @@ import Addfriend from './Addfriend'
 import { useMyContext } from '../context/MyContext'
 
 import io from 'socket.io-client';
+// import { connect } from 'mongoose'
 
-const socket = io(process.env.BASE_URL || 'http://localhost:5000');
+const socket = io('http://localhost:5000/');
 
 
 const Chat = () => {
   const { selectedContact } = useMyContext();
-  console.log("🚀 ~ file: Chat.js:13 ~ Chat ~ selectedContact:", selectedContact.message)
+  // console.log("🚀 ~ file: Chat.js:13 ~ Chat ~ selectedContact:", selectedContact.message)
   const contactName = selectedContact && selectedContact.name;
   const userid = selectedContact && selectedContact._id;
 
 
   const [isUserOnline, setIsUserOnline] = useState(false);
-
+  const [isConnected, setIsConnected] = useState(false)
+  const [currentMessage, setCurrentMessage] = useState("")  
+  const [preMessage, setPreMessage] = useState("")
+  const [istyping, setisTyping] = useState(false)
+  socket.on('connect',()=>{
+    setIsConnected(true);
+  })
+  
+  // useEffect(() => {
+      
+     
+   
+  // }, [isConnected]);
+  
+  
   useEffect(() => {
-    // Emit 'join' event when the component mounts
-    socket.emit('join', selectedContact._id);
 
+    // Emit 'join' event when the component mounts
+    if(!isConnected)return
+
+    socket.emit('join', localStorage.getItem("userId"));
+    
+    socket.emit('isonline',selectedContact._id)
+    
     // Listen for 'online' event from the server
     socket.on('online', (userId) => {
+      console.log("🚀 ~ file: Chat.js:24 ~ Chat ~ isUserOnline:", localStorage.getItem("userId"))
       if (userId === selectedContact._id) {
         setIsUserOnline(true);
       }
@@ -40,10 +61,25 @@ const Chat = () => {
       }
     });
 
-    // Clean up event listeners when the component unmounts
-    return () => {
-      socket.disconnect();
-    };
+    socket.on( 'istyping',(istyping)=>{
+      setisTyping(istyping);
+      console.log({istyping})
+    })
+    const intervalId = setInterval(() => {
+      let istyping = currentMessage != preMessage
+      setPreMessage(currentMessage)
+      socket.emit('ping', istyping)
+      if(selectedContact){
+
+        socket.emit('pong', selectedContact._id)
+      }
+
+    }, 1000);
+    
+
+    return ()=>{
+      clearInterval(intervalId)
+    }
   }, [selectedContact]);
   
 
@@ -73,7 +109,7 @@ const Chat = () => {
       </div>
       
       {selectedContact && <Message />}
-      {selectedContact && <Input user={userid} />}
+      {selectedContact && <Input user={userid} mess={setCurrentMessage} />}
 
       
       {showAddFriendModal && <Addfriend closeModal={() => setShowAddFriendModal(false)} />}

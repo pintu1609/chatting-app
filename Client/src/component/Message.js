@@ -69,13 +69,13 @@ const Message = () => {
   useEffect(() => {
     if (token) {
       getMeassages(); 
-      const intervalId = setInterval(() => {
-        getMeassages(); // Fetch messages every 1ss
-      }, 1000); // 1 second
+      // const intervalId = setInterval(() => {
+      //   getMeassages(); // Fetch messages every 1ss
+      // }, 1000); // 1 second
 
-      return () => {
-        clearInterval(intervalId); // Clear the interval when the component unmounts
-      };
+      // return () => {
+      //   clearInterval(intervalId); // Clear the interval when the component unmounts
+      // };
     } else {
       navigate("/");
     }

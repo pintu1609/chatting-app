@@ -23,25 +23,71 @@ app.use(cors());
 app.use(db.connectToDatabase);
 app.use('/api/v1/', routes);
 const server = http.createServer(app);
-const io = socketIO(server);
+const io = socketIO(server,{cors:{origin:'*'}});
 
+const onlineuser={
+  
+}
 
 io.on('connection', (socket) => {
     console.log('A user connected');
   
     socket.on('join', (userId) => {
+      onlineuser[socket.id]={id:userId, typing:false};
       socket.join(userId);  // Join a room with the user's ID
       io.emit('online', userId);  // Broadcast 'online' event to all clients
     });
-  
+    socket.on(
+      'isonline', (userId) =>{
+        console.log(userId)
+        const user = Object.values(onlineuser)
+        let isonline=false
+        for (let i = 0; i < user.length; i++) {
+          if (user[i].id==userId) {
+            isonline=true;
+            
+          }
+        } 
+        if(isonline){
+          socket.emit('online', userId)
+        }else{
+          socket.emit('offline', userId)
+
+        }
+          
+      }
+    )
+  socket.on('ping',(istyping)=>{
+    if(onlineuser[socket.id]){
+      onlineuser[socket.id].typing = istyping
+
+    }
+  } )
+
+  socket.on(
+    'pong', (userId) =>{
+      const user = Object.values(onlineuser)
+      let istyping=false
+      for (let i = 0; i < user.length; i++) {
+        if (user[i].id==userId) {
+          istyping=user[i].typing;
+          
+        }
+      } 
+      socket.emit('istyping',istyping)
+        
+    }
+  )
     socket.on('disconnect', () => {
       console.log('User disconnected');
-      io.emit('offline', socket.id);  // Broadcast 'offline' event to all clients
+      delete onlineuser[socket.id];
+
+      // io.emit('offline', socket.id);  // Broadcast 'offline' event to all clients
     });
   });
 
-const portNumber = process.env.PORT; 
-app.listen(portNumber, (err) => {
+const portNumber = process.env.PORT || 5000; 
+server.listen(portNumber, (err) => {
     console.log("portNumber ", process.env.PORT);
     if (err) {
         console.log(err);
@@ -51,3 +97,4 @@ app.listen(portNumber, (err) => {
 });
 
 app.use(useErrorHandler);
+

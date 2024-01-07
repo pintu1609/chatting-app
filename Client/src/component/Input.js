@@ -4,6 +4,7 @@ import img from '../img/img.png'
 import { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useMyContext } from '../context/MyContext';
 const BASE_URL = process.env.BASE_URL || "http://localhost:5000/api/v1";
 
 
