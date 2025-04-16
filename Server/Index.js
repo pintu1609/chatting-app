@@ -15,6 +15,10 @@ const { useErrorHandler } = require('./api/middlewares/error-handler');
 
 const app = express();
 
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
 app.use(express.static("public"));
 
 app.use(bodyParser.json({ limit: "50mb", strict: false }));
