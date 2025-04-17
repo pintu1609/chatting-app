@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Add from "../img/download.png";
 import { useMyContext } from '../context/MyContext';
 
-const BASE_URL = process.env.BASE_URL || "http://localhost:5000/api/v1";
+const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api/v1";
 
 const Navbar = () => {
   const navigate = useNavigate();

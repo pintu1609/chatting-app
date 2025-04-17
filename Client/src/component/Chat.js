@@ -12,7 +12,7 @@ import { useMyContext } from '../context/MyContext'
 import io from 'socket.io-client';
 // import { connect } from 'mongoose'
 
-const socket = io(process.env.SOCKET_URL || "http://localhost:5000");
+const socket = io(process.env.REACT_APP_SOCKET_URL || "http://localhost:5000");
 
 
 const Chat = () => {

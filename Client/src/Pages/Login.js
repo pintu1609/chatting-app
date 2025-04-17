@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import AOS from "aos"; // Import AOS library
 import "aos/dist/aos.css"; // Import AOS styles
 
-const BASE_URL = process.env.BASE_URL || "http://localhost:5000/api/v1";
+const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api/v1";
 
 const Login = () => {
   const navigate = useNavigate();

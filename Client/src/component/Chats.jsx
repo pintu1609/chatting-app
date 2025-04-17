@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMyContext } from "../context/MyContext";
 
-const BASE_URL = process.env.BASE_URL || "http://localhost:5000/api/v1";
+const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api/v1";
 
 const Chats = () => {
   const navigate = useNavigate();
