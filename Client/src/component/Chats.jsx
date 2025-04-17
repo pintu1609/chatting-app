@@ -26,7 +26,7 @@ const Chats = () => {
 
 
   const getContact = async () => {
-    const response = await axios.get(`http://localhost:5000/api/v1/contact`, {
+    const response = await axios.get(`${BASE_URL}/contact`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",

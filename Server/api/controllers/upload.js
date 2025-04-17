@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 exports.getFileName = async (req, res, next) => {
     const { filename } = req.file;
     // const URL = `${process.env.RENDER_URL}/api/v1/uploader/${filename}`
-    const URL = `http://localhost:5000/api/v1/uploader/${filename}`
+    const URL = `${process.env.BASE_URL}/api/v1/uploader/${filename}`
 
     responseHandler(URL, res)
 }
