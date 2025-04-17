@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 exports.getFileName = async (req, res, next) => {
     const { filename } = req.file;
     // const URL = `${process.env.RENDER_URL}/api/v1/uploader/${filename}`
-    const URL = `${process.env.REACT_APP_SOCKET_URL}/api/v1/uploader/${filename}`
+    const URL = `https://chatting-app-backend-b1h4.onrender.com/api/v1/uploader/${filename}`
 
     responseHandler(URL, res)
 }
