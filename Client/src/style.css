@@ -221,85 +221,98 @@ img{
 
 
 
-.meassage{
-
-        background-color: #ddddf7;
-        padding: 10px;
-        height: calc(100% - 100px);
-        overflow-y: auto;
+.meassage {
+    background-color: #ddddf7;
+    padding: 10px;
+    height: calc(100% - 100px);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column-reverse;
+  
+    .meassageitem {
+      display: flex;
+      /* gap: 10px; */
+      margin-bottom: 10px;
+  
+      &.owner {
+        flex-direction: row-reverse;
+  
+        .meassagecontent {
+          align-items: flex-end;
+  
+          p {
+            background-color: #8da4f1;
+            color: white;
+            border-radius: 10px 0px 10px 10px;
+            width: auto;
+            max-width: 470px;
+            word-wrap: break-word;
+          }
+        }
+  
+        .meassageInfo {
+          align-items: flex-start;
+  
+          span {
+            text-align: right;
+          }
+        }
+      }
+  
+      .meassageInfo {
         display: flex;
-        flex-direction: column-reverse;
-        
-        .meassageitem{
-            display: flex;
-            gap:10px;
-            margin-bottom: 10px;
-
-            .meassageInfo{
-                display: flex;
-                flex-direction: column;
-                color: gray;
-               font-weight: 300;
-                img{
-                width: 35px;
-                height:35px;
-                border-radius: 50%;
-                object-fit: cover;
-                }
-                span{
-                    font-size: 12px;
-                    width: 70px;
-                }
-            }
-            .meassagecontent{
-                max-width: 80%;
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
-                img{
-                    width: 50%;
-                    height: 100%;
-
-                }
-                p{
-                    font-size: 15px;
-                    background-color: white;
-                    padding: 7px 15px;
-                    border-radius: 0px 10px 10px 10px;
-                    max-width: max-content;
-                }
-            }
-            &.owner{
-                flex-direction: row-reverse;
-                .meassagecontent{
-
-                align-items: flex-end;
-                p{
-                    background-color: #8da4f1;
-                    color: white;
-                    border-radius: 10px 0px 10px 10px;
-                    width: 470px;
-                    word-wrap:break-word;
-                }
-            }
-            }
-
+        flex-direction: column;
+        color: gray;
+        font-weight: 300;
+        align-items: end;
+  
+        img {
+          width: 35px;
+          height: 35px;
+          border-radius: 50%;
+          object-fit: cover;
         }
-        p{
-           
-            justify-content: center;
-           
-           font-size: 18px;
-           background-color: #8da4f1;
-           color: white;
-           border-radius: 10px 0px 10px 0px;
-           max-width: max-content;
-           padding: 0px 10px;
-
-
-
+  
+        span {
+          font-size: 12px;
+          width: 70px;
         }
+      }
+  
+      .meassagecontent {
+        max-width: 80%;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+  
+        img {
+          width: 50%;
+          height: 100%;
+        }
+  
+        p {
+          font-size: 15px;
+          background-color: white;
+          padding: 7px 15px;
+          border-radius: 0px 10px 10px 10px;
+          max-width: max-content;
+          color: #5d5d8d;
+          word-wrap: break-word;
+        }
+      }
     }
+  
+    > p.conversation {
+      align-self: center;
+      font-size: 18px;
+      background-color: #8da4f1;
+      color: white;
+      border-radius: 10px 0px 10px 0px;
+      max-width: max-content;
+      padding: 0px 10px;
+    }
+  }
+  
 
 
 
