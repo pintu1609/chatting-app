@@ -9,10 +9,7 @@ import { useState, useEffect } from "react";
 import Addfriend from "./Addfriend";
 import { useMyContext } from "../context/MyContext";
 
-import io from "socket.io-client";
-// import { connect } from 'mongoose'
-
-const socket = io(process.env.REACT_APP_SOCKET_URL || "http://localhost:5000");
+import socket from "../socket";
 
 const Chat = () => {
   const { selectedContact } = useMyContext();
@@ -23,24 +20,18 @@ const Chat = () => {
 
   const [isUserOnline, setIsUserOnline] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
-  const [currentMessage, setCurrentMessage] = useState("");
-  // console.log("🚀 ~ file: Chat.js:29 ~ Chat ~ currentMessage:", currentMessage);
-  const [preMessage, setPreMessage] = useState("");
-  // console.log("🚀 ~ file: Chat.js:31 ~ Chat ~ preMessage:", preMessage);
+  console.log("🚀 ~ Chat ~ isConnected:", isConnected);
+
   const [istyping, setisTyping] = useState(false);
 
   socket.on("connect", () => {
     setIsConnected(true);
   });
-  // useEffect(() => {
-
-  // }, [isConnected]);
 
   useEffect(() => {
     if (!userid || !selectedContact._id) return;
 
     const handleConnect = () => {
-      // console.log("Socket connection established");
       setIsConnected(true);
       socket.emit("join", localStorage.getItem("userId"));
       socket.emit("isonline", selectedContact._id);
@@ -48,11 +39,8 @@ const Chat = () => {
 
     // If not already connected, listen for the connect event
     if (!socket.connected) {
-      // console.log("Connecting Socket");
       socket.on("connect", handleConnect);
     } else {
-      // Already connected, emit immediately
-      // console.log("Socket already connected");
       setIsConnected(true);
       socket.emit("join", localStorage.getItem("userId"));
       socket.emit("isonline", selectedContact._id);
@@ -64,61 +52,32 @@ const Chat = () => {
 
     // Set up listeners
     socket.on("online", (userId) => {
-      // console.log("User is online:", userId);
       if (userId === selectedContact._id) {
         setIsUserOnline(true);
       }
     });
 
     socket.on("offline", (userId) => {
-      // console.log("User is offline:", userId);
       if (userId === selectedContact._id) {
         setIsUserOnline(false);
       }
     });
 
     socket.on("istyping", ({ isTyping, senderId }) => {
-      console.log("🚀 ~ socket.on ~ senderId:", senderId)
-      console.log("🚀 ~ socket.on ~ status:", isTyping)
+      console.log("🚀 ~ socket.on ~ senderId:", senderId);
+      console.log("🚀 ~ socket.on ~ status:", isTyping);
       if (senderId === selectedContact._id) {
         setisTyping(isTyping);
       }
     });
-     
-
-    // const intervalId = setInterval(() => {
-    //   let istyping = currentMessage !== preMessage;
-    //   console.log("🚀 ~ intervalId ~ istyping:", istyping)
-    //   setPreMessage(currentMessage);
-    //   socket.emit("ping", istyping);
-    //   if (selectedContact) {
-    //     socket.emit("pong", selectedContact._id);
-    //   } else {
-    //     socket.emit("pong", userid);
-    //   }
-    // }, 1000);
-
-
-    const intervalId = setInterval(() => {
-      const isTyping = currentMessage !== preMessage;
-      setPreMessage(currentMessage);
-    
-      // Send senderId, receiverId, and typing status
-      socket.emit("typing", {
-        senderId: localStorage.getItem("userId"),
-        receiverId: selectedContact._id,
-        isTyping,
-      });
-    }, 500);
 
     return () => {
-      clearInterval(intervalId);
       socket.off("connect", handleConnect);
       socket.off("online");
       socket.off("offline");
       socket.off("istyping");
     };
-  }, [selectedContact._id, userid, currentMessage, preMessage]);
+  }, [selectedContact._id, userid]);
 
   const [showAddFriendModal, setShowAddFriendModal] = useState(false);
 
@@ -137,13 +96,9 @@ const Chat = () => {
             <span> {contactName}</span>
             {selectedContact && (
               <p style={{ color: "white" }}>
-                {istyping ? "istyping" :
-                isUserOnline ? "Online" : "Offline"}
+                {istyping ? "istyping" : isUserOnline ? "Online" : "Offline"}
               </p>
             )}
-            {/* {selectedContact && (
-              <p style={{ color: "white" }}>{istyping ? "istyping" : ""}</p>
-            )} */}
           </div>
         </div>
         <div className="chatIcons">
@@ -154,7 +109,7 @@ const Chat = () => {
       </div>
 
       {selectedContact && <Message />}
-      {selectedContact && <Input user={userid} mess={setCurrentMessage} />}
+      {selectedContact && <Input user={userid} />}
 
       {showAddFriendModal && (
         <Addfriend closeModal={() => setShowAddFriendModal(false)} />

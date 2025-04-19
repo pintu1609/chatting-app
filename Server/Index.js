@@ -66,6 +66,12 @@ io.on("connection", (socket) => {
       socket.emit("offline", userId);
     }
   });
+
+
+  socket.on("offline", (userId) => {
+    socket.broadcast.emit("offline", userId);
+  });
+  
   // socket.on("ping", (istyping) => {
   //   if (onlineuser[socket.id]) {
   //     onlineuser[socket.id].typing = istyping;
