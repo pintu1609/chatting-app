@@ -24,9 +24,9 @@ const Chat = () => {
   const [isUserOnline, setIsUserOnline] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [currentMessage, setCurrentMessage] = useState("");
-  console.log("🚀 ~ file: Chat.js:29 ~ Chat ~ currentMessage:", currentMessage);
+  // console.log("🚀 ~ file: Chat.js:29 ~ Chat ~ currentMessage:", currentMessage);
   const [preMessage, setPreMessage] = useState("");
-  console.log("🚀 ~ file: Chat.js:31 ~ Chat ~ preMessage:", preMessage);
+  // console.log("🚀 ~ file: Chat.js:31 ~ Chat ~ preMessage:", preMessage);
   const [istyping, setisTyping] = useState(false);
 
   socket.on("connect", () => {
@@ -40,7 +40,7 @@ const Chat = () => {
     if (!userid || !selectedContact._id) return;
 
     const handleConnect = () => {
-      console.log("Socket connection established");
+      // console.log("Socket connection established");
       setIsConnected(true);
       socket.emit("join", localStorage.getItem("userId"));
       socket.emit("isonline", selectedContact._id);
@@ -48,11 +48,11 @@ const Chat = () => {
 
     // If not already connected, listen for the connect event
     if (!socket.connected) {
-      console.log("Connecting Socket");
+      // console.log("Connecting Socket");
       socket.on("connect", handleConnect);
     } else {
       // Already connected, emit immediately
-      console.log("Socket already connected");
+      // console.log("Socket already connected");
       setIsConnected(true);
       socket.emit("join", localStorage.getItem("userId"));
       socket.emit("isonline", selectedContact._id);
@@ -64,31 +64,52 @@ const Chat = () => {
 
     // Set up listeners
     socket.on("online", (userId) => {
-      console.log("User is online:", userId);
+      // console.log("User is online:", userId);
       if (userId === selectedContact._id) {
         setIsUserOnline(true);
       }
     });
 
     socket.on("offline", (userId) => {
-      console.log("User is offline:", userId);
+      // console.log("User is offline:", userId);
       if (userId === selectedContact._id) {
         setIsUserOnline(false);
       }
     });
 
-    socket.on("istyping", (istyping) => {
-      setisTyping(istyping);
+    socket.on("istyping", ({ isTyping, senderId }) => {
+      console.log("🚀 ~ socket.on ~ senderId:", senderId)
+      console.log("🚀 ~ socket.on ~ status:", isTyping)
+      if (senderId === selectedContact._id) {
+        setisTyping(isTyping);
+      }
     });
+     
+
+    // const intervalId = setInterval(() => {
+    //   let istyping = currentMessage !== preMessage;
+    //   console.log("🚀 ~ intervalId ~ istyping:", istyping)
+    //   setPreMessage(currentMessage);
+    //   socket.emit("ping", istyping);
+    //   if (selectedContact) {
+    //     socket.emit("pong", selectedContact._id);
+    //   } else {
+    //     socket.emit("pong", userid);
+    //   }
+    // }, 1000);
+
 
     const intervalId = setInterval(() => {
-      let istyping = currentMessage !== preMessage;
+      const isTyping = currentMessage !== preMessage;
       setPreMessage(currentMessage);
-      socket.emit("ping", istyping);
-      if (selectedContact) {
-        socket.emit("pong", selectedContact._id);
-      }
-    }, 1000);
+    
+      // Send senderId, receiverId, and typing status
+      socket.emit("typing", {
+        senderId: localStorage.getItem("userId"),
+        receiverId: selectedContact._id,
+        isTyping,
+      });
+    }, 500);
 
     return () => {
       clearInterval(intervalId);
@@ -116,12 +137,13 @@ const Chat = () => {
             <span> {contactName}</span>
             {selectedContact && (
               <p style={{ color: "white" }}>
-                {isUserOnline ? "Online" : "Offline"}
+                {istyping ? "istyping" :
+                isUserOnline ? "Online" : "Offline"}
               </p>
             )}
-            {selectedContact && (
+            {/* {selectedContact && (
               <p style={{ color: "white" }}>{istyping ? "istyping" : ""}</p>
-            )}
+            )} */}
           </div>
         </div>
         <div className="chatIcons">

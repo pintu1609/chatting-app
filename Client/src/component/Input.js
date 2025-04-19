@@ -9,7 +9,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api/v1
 
 
 const Input = (props) => {
-  console.log('userid Path:', props.user);
+  // console.log('userid Path:', props.user);
   const navigate=useNavigate();
 
 
@@ -72,7 +72,7 @@ const Input = (props) => {
   
   
   
-  console.log("🚀 ~ file: Input.js:17 ~ Input ~ meassageSend:", meassageSend)
+  // console.log("🚀 ~ file: Input.js:17 ~ Input ~ meassageSend:", meassageSend)
   const handleChange = (e) => {
     const { name, value } = e.target;
     props.mess(value)

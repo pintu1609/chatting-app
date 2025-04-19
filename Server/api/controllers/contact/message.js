@@ -72,7 +72,7 @@ exports.getList = async (req, res, next) => {
 
     
     const queries = search(filter, pagination);
-    console.log("Filter:", JSON.stringify(queries));
+    // console.log("Filter:", JSON.stringify(queries));
 
     let response = await service.search(queries);
 

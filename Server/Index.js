@@ -42,45 +42,53 @@ io.on("connection", (socket) => {
 
   socket.on("join", (userId) => {
     onlineuser[socket.id] = { id: userId, typing: false };
-    console.log("User joined: ", userId, onlineuser);
+    // console.log("User joined: ", userId, onlineuser);
     socket.join(userId); // Join a room with the user's ID
     io.emit("online", userId); // Broadcast 'online' event to all clients
   });
   socket.on("isonline", (userId) => {
-    console.log(userId);
+    // console.log(userId);
     const user = Object.values(onlineuser);
-    console.log("Online Users: ", onlineuser);
+    // console.log("Online Users: ", onlineuser);
     let isonline = false;
     for (let i = 0; i < user.length; i++) {
-      console.log(user[i], userId);
+      // console.log(user[i], userId);
       if (user[i].id === userId) {
-        console.log("id matches")
+        // console.log("id matches")
         isonline = true;
       }
     }
     if (isonline) {
-      console.log("user is online");
+      // console.log("user is online");
       socket.emit("online", userId);
     } else {
-      console.log("user is offline");
+      // console.log("user is offline");
       socket.emit("offline", userId);
     }
   });
-  socket.on("ping", (istyping) => {
-    if (onlineuser[socket.id]) {
-      onlineuser[socket.id].typing = istyping;
-    }
-  });
+  // socket.on("ping", (istyping) => {
+  //   if (onlineuser[socket.id]) {
+  //     onlineuser[socket.id].typing = istyping;
+  //   }
+  // });
 
-  socket.on("pong", (userId) => {
-    const user = Object.values(onlineuser);
-    let istyping = false;
-    for (let i = 0; i < user.length; i++) {
-      if (user[i].id == userId) {
-        istyping = user[i].typing;
-      }
-    }
-    socket.emit("istyping", istyping);
+  // socket.on("pong", (userId) => {
+  //   const user = Object.values(onlineuser);
+  //   let istyping = false;
+  //   for (let i = 0; i < user.length; i++) {
+  //     if (user[i].id == userId) {
+  //       istyping = user[i].typing;
+  //     }
+  //   }
+  //   socket.emit("istyping", istyping);
+  // });
+
+  socket.on("typing", ({ senderId, receiverId, isTyping }) => {
+    console.log("🚀 ~ socket.on ~ senderId:", senderId)
+    console.log("🚀 ~ socket.on ~ isTyping:", isTyping)
+    console.log("🚀 ~ socket.on ~ receiverId:", receiverId)
+    // Emit only to receiver
+    io.to(receiverId).emit("istyping", {isTyping, senderId});
   });
   socket.on("disconnect", () => {
     console.log('User disconnected');

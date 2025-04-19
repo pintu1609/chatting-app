@@ -20,7 +20,7 @@ exports.connectToDatabase = async (req, res, next) => {
     process.env.DB_STRING ||
     "mongodb+srv://pintukumar808284:ZyLWuB7bdBrOebml@cluster0.kqbqscz.mongodb.net/?retryWrites=true&w=majority";
   if (dbConnection) {
-    console.log("----DB----PREVIOUS-CONNECTION----------------");
+    // console.log("----DB----PREVIOUS-CONNECTION----------------");
     next();
   } else {
     console.log("process.env.DB_STRING, options ",mongoURI);
