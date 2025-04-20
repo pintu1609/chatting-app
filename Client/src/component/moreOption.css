@@ -1,0 +1,78 @@
+.more-modal {
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    z-index: 1000;
+    background: rgb(221, 221, 247);
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    width: 200px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .more-modal-content {
+    padding: 16px;
+  }
+  
+  .profile-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    
+  }
+  
+  .username {
+    font-weight: bold;
+    margin: 0;
+    font-size: 15px;
+  }
+  
+  .modal-options {
+    list-style: none;
+    padding: 0;
+    margin-top: 12px;
+  }
+  
+  .modal-options li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0;
+    cursor: pointer;
+    transition: background 0.2s;
+    /* color: rgb(175, 175, 175); */
+    color:rgb(93, 93, 141);
+    font-weight: 600;
+
+
+  }
+
+ 
+  .modal-icon {
+    font-size: 16px;
+    color: #2f2d52;
+  }
+  
+  
+  /* .modal-options li:hover {
+    background: #f0f0f0;
+    color: rgb(175, 175, 175);
+  } */
+  
+  .close-btn {
+    /* margin-top: 10px; */
+    background: #6c757d;
+    border: none;
+    padding: 6px 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #fff;
+  }
+  

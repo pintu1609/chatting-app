@@ -72,12 +72,13 @@ const Addfriend = ({ closeModal }) => {
             style={{
               background: "#ddddf7",
               position: "relative",
-              left: "275px",
-              top: "90px",
+              top: "110px",
+              right: "290px",
+              width: "220px",
             }}
           >
             <div className="modal-header">
-              <h5 className="modal-title">Add Friend</h5>
+              <h5 className="modal-title" style={{ color:"rgb(175, 175, 175)" }}>Add Friend</h5>
               <button
                 type="button"
                 className="btn-close"
@@ -88,8 +89,8 @@ const Addfriend = ({ closeModal }) => {
             </div>
 
             <div className="modal-body">
-              <div className="card" style={{ width: "20rem" }}>
-                <div className="card-body" style={{ background: "#5d5d8d" }}>
+              <div className="card" style={{ width: "190px" }}>
+                <div className="card-body" style={{ background: "#5d5d8d", padding:"10px"}}>
                   <form>
                     <input
                       type="text"

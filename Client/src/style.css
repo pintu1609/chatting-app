@@ -108,12 +108,15 @@ img{
     font-weight: bold;
 }
 .navbar .user{
+    
     display: flex;
     gap: 5px;
     align-items: center;
 }
 .navbar .user img{
-    background-color: #ddddf7;
+    /* background-color: #ddddf7; */
+    background-color: #2f2d52;
+
     height: 24px;
     width: 24px;
     border-radius:50%;
@@ -275,7 +278,7 @@ img{
   
         span {
           font-size: 12px;
-          width: 70px;
+          width: 75px;
         }
       }
   
@@ -362,15 +365,17 @@ img{
 }
 
 .modal{
+   
     .modal-dialog{
         .modal-content{
             .modal-body{
                 .card{
+
                     .card-body{
                         form{
                             
                             input{
-                                width: 285px;
+                                width: 160px;
                             }
                         }
                     }

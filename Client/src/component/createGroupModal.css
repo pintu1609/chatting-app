@@ -1,0 +1,95 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+  }
+  
+  .create-group-modal {
+    background: rgb(221, 221, 247);
+    padding: 20px;
+    border-radius: 12px;
+    width: 350px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .create-group-modal h2 {
+    margin-bottom: 15px;
+    color:rgb(93, 93, 141);
+
+  }
+  
+  .create-group-modal label {
+    color:rgb(93, 93, 141);
+
+    display: block;
+    font-weight: 500;
+    margin-top: 10px;
+    margin-bottom: 5px;
+  }
+  
+  .group-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    resize: none;
+    background: rgb(93, 93, 141);
+    color: #ccc;
+  }
+  
+  .group-input::placeholder {
+    color: #ccc;
+  }
+  
+  .group-input:focus {
+    outline: none;
+    border-color: #2f2d52;
+  }
+  
+  .group-input[multiple] {
+    height: 100px;
+  }
+  
+  .modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .btn.cancel {
+    background-color: #ccc;
+  }
+  
+  .btn.create {
+    background-color: #2f2d52;
+    color: white;
+  }
+  
+  .btn.cancel:hover{
+    opacity: 0.8;
+    background-color: #ccc;
+    color: #2f2d52;
+
+  }
+  .btn.create:hover{
+    opacity: 0.8;
+    background-color: #2f2d52;
+  }
